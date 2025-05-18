@@ -11,9 +11,9 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": [
-                "--input-srt", "/home/abner/abner2/zdev/sh/story02/story_male_cn.txt",
-                "--original-text", "/home/abner/abner2/zdev/sh/story02/edge-tts-input-old-dog.txt",
-                "--output-srt","output-srt.srt",                
+                "--input-srt", "others/story_male_cn.srt",
+                "--original-text", "others/edge-tts-input-old-dog.txt",
+                "--output-srt","others/output-srt.srt",                
             ]
         }
     ]
