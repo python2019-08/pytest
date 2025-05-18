@@ -1,0 +1,11 @@
+.gradio/
+data/
+hub/
+
+AlignerPt.txt
+log.txt
+pytest.sln
+simp.txt
+
+steam-train-whistle-daniel_simon-converted-from-mp3.wav
+tmp.*
