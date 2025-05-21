@@ -11,9 +11,10 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": [
-                "--input-srt", "others/story_male_cn.srt",
-                "--original-text", "others/edge-tts-input-old-dog.txt",
-                "--output-srt","others/output-srt.srt",                
+                "--audio", "/home/abner/abner2/zdev/ai/av/a-story-video-maker/04-net-funeral/story_male_cn.mp3",
+                "--subtitle", "/home/abner/abner2/zdev/ai/av/a-story-video-maker/04-net-funeral/story_male_cn.wav.srt",
+                "--output","video-maker/output-refiner.mp4",     
+                "--background","video-maker/cover.jpeg",               
             ]
         }
     ]

@@ -26,6 +26,11 @@ import re
 import sys
 from pathlib import Path
 
+# $ python /home/abner/abner2/zdev/ai/pytest/others/test_argparse.py --input-srt a.srt  --original-text b.txt dd
+# Namespace(inputSrt='a.srt', originalText='b.txt', output_srt=None, o='dd', overwrite=False)
+# args.inputSrt= a.srt
+# args.originalText= b.txt
+# args.output_srt= None
 
 if __name__=="__main__":
     import argparse
@@ -35,6 +40,7 @@ if __name__=="__main__":
     parser.add_argument('--original-text', dest="originalText", required=True, help='原始文本文件路径')
     parser.add_argument('--output-srt',  help='输出的SRT文件路径，默认在原文件名后加_punct')
     parser.add_argument('o',  help='输出的文件路径')
+    parser.add_argument('--overwrite', action='store_true', help='是否覆盖已存在的文件')
 
     args = parser.parse_args()
     print(args)
