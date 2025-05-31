@@ -1,0 +1,88 @@
+"""
+在 Ubuntu 上，可以使用 Python 的 `playsound` 库来播放铃声
+（前提是你已经安装了这个库，如果没有安装，可以使用 `  pip install  playsound  ` 进行安装）。 
+"""
+# import schedule
+import time
+from playsound import playsound
+import display_time as dispTm
+import get_key as getk
+
+
+# --------------------------------------------
+"""
+playsound 库在播放音频时，默认情况下是阻塞式的，即播放过程中程序会暂停在播放函数处，
+直到音频播放完毕。如果想要中断正在播放的音频，可以使用多线程的方式来实现，通过在主线
+程中控制线程的状态来达到中断播放的目的。以下是一个简单的示例代码，展示如何使用 playsound 
+并在一定条件下中断音频播放： 
+"""
+ 
+import threading
+  
+class SoundPlayerThread(threading.Thread):
+    """
+    定义了一个 SoundPlayer 类，继承自 threading.Thread，用于在单独的线程中播放音频。
+
+    请注意，直接终止线程可能会导致一些问题，例如资源未正确释放等，在实际应用中可能需要更
+    完善的处理方式。 
+    """
+    def __init__(self, sound_file):
+        threading.Thread.__init__(self)
+        self.sound_file = sound_file
+        self.is_playing = False
+
+    def run(self):
+        """
+        run 方法在启动线程时执行，设置 is_playing 标志为 True，然后调用 playsound 
+        播放音频， 播放结束后将 is_playing 设置为 False。
+        """
+        while True:    
+            #----  
+            if self.is_playing == True :
+                try:
+                    print(f"\n播放铃声: {self.sound_file}")
+                    playsound(self.sound_file)
+                finally:
+                    self.is_playing = False
+            #----
+            time.sleep(1)  # seelp 1秒
+            
+    def startPlay(self):
+        self.is_playing = True       
+
+    def stopPlay(self):
+        """
+        stop 方法将 is_playing 标志设置为 False，虽然 playsound 本身没有直接的停止方法，
+        但通过这种方式可以在一定程度上控制线程的状态，并且在示例中通过 join 方法等待线程结束。  
+        """
+        # 这里对于playsound库本身没有直接停止播放的方法，
+        # 但可以通过终止线程来达到类似中断的效果（在某些系统上可能有副作用）
+        self.is_playing = False
+
+
+def ringBell_withThread():
+    # getk.installKeyboardListener()
+
+    sound_file = "/home/abner/Music/60s.mp3"  # 请将此处替换为实际的音频文件路径
+    player = SoundPlayerThread(sound_file)
+    player.start()
+
+
+    while True:
+        current_time = time.localtime()
+        minute = current_time.tm_min
+        # if minute % 30 == 0:
+        if minute == 33 or minute == 40 or minute == 45 or minute == 50:
+            player.startPlay()
+        else :
+            player.stopPlay()
+         
+        # 其他程序逻辑
+        time.sleep(1)     
+        dispTm.display_time()
+
+ 
+    # player.stopPlay()
+    # player.join()
+
+    print("音频播放已处理完毕或已中断")
