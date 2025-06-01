@@ -78,7 +78,7 @@ def ringBell_withThread():
         # if minute == 35 or minute == 40 or minute == 45 :
         if minute == 38 : 
             player.startPlay("./cuckoo4s.mp3")
-        elif minute == 40 :
+        elif minute == 42 :
             player.startPlay("./cock-dawn.mp3")
         elif minute == 45 :
             player.startPlay("./steam-train-whistle30s.mp3")            
