@@ -26,9 +26,9 @@ class SoundPlayerThread(threading.Thread):
     请注意，直接终止线程可能会导致一些问题，例如资源未正确释放等，在实际应用中可能需要更
     完善的处理方式。 
     """
-    def __init__(self, sound_file):
+    def __init__(self , aSoundFile ):
         threading.Thread.__init__(self)
-        self.sound_file = sound_file
+        self.sound_file1 = aSoundFile
         self.is_playing = False
 
     def run(self):
@@ -42,12 +42,15 @@ class SoundPlayerThread(threading.Thread):
                 try:
                     print(f"\n播放铃声: {self.sound_file}")
                     playsound(self.sound_file)
+
+                    time.sleep(30)    
                 finally:
                     self.is_playing = False
             #----
             time.sleep(1)  # seelp 1秒
             
-    def startPlay(self):
+    def startPlay(self , aSoundFile="./cock-dawn.mp3" ):
+        self.sound_file =aSoundFile
         self.is_playing = True       
 
     def stopPlay(self):
@@ -63,7 +66,7 @@ class SoundPlayerThread(threading.Thread):
 def ringBell_withThread():
     # getk.installKeyboardListener()
 
-    sound_file = "/home/abner/Music/60s.mp3"  # 请将此处替换为实际的音频文件路径
+    sound_file = "./cock-dawn.mp3"  # 请将此处替换为实际的音频文件路径
     player = SoundPlayerThread(sound_file)
     player.start()
 
@@ -72,10 +75,15 @@ def ringBell_withThread():
         current_time = time.localtime()
         minute = current_time.tm_min
         # if minute % 30 == 0:
-        if minute == 33 or minute == 40 or minute == 45 or minute == 50:
-            player.startPlay()
+        # if minute == 35 or minute == 40 or minute == 45 :
+        if minute == 38 : 
+            player.startPlay("./cuckoo4s.mp3")
+        elif minute == 40 :
+            player.startPlay("./cock-dawn.mp3")
+        elif minute == 45 :
+            player.startPlay("./30s.mp3")            
         else :
-            player.stopPlay()
+            player.stopPlay() ## stop
          
         # 其他程序逻辑
         time.sleep(1)     
