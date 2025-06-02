@@ -10,4 +10,14 @@ simp.txt
 steam-train-whistle-daniel_simon-converted-from-mp3.wav
 tmp.*
 
+__pycache__/
 others/__pycache__/
+clock/~/.pycache/*
+gradio/__pycache__/
+
+ocr-text/__pycache__/
+
+pytorch-official/__pycache__/
+pytorch-runoob/__pycache__/
+tensorrt/__pycache__/
+video-maker/__pycache__/

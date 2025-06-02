@@ -3,11 +3,12 @@
 （前提是你已经安装了这个库，如果没有安装，可以使用 `  pip install  playsound  ` 进行安装）。 
 """
 # import schedule
+import os
 import time
 from playsound import playsound
 import display_time as dispTm
 import get_key as getk
-
+ 
 
 # --------------------------------------------
 """
@@ -39,10 +40,13 @@ class SoundPlayerThread(threading.Thread):
         while True:    
             #----  
             if self.is_playing == True :
-                try:
+                try:                    
                     print(f"\n播放铃声: {self.sound_file}")
-                    playsound(self.sound_file)
+                    curDirPath = self.get_current_dir_path()
+                    soundFile = curDirPath + "/" + self.sound_file
+                    # print(f"\n soundFile={soundFile}")
 
+                    playsound(soundFile)
                     time.sleep(30)    
                 finally:
                     self.is_playing = False
@@ -62,11 +66,18 @@ class SoundPlayerThread(threading.Thread):
         # 但可以通过终止线程来达到类似中断的效果（在某些系统上可能有副作用）
         self.is_playing = False
 
+    def get_current_dir_path(self):
+        # 使用os模块
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        # 或者使用pathlib模块
+        # current_dir = Path(__file__).resolve().parent
+        return current_dir
 
 def ringBell_withThread():
     # getk.installKeyboardListener()
+    
 
-    sound_file = "./cock-dawn.mp3"  # 请将此处替换为实际的音频文件路径
+    sound_file = "cock-dawn.mp3"  # 请将此处替换为实际的音频文件路径
     player = SoundPlayerThread(sound_file)
     player.start()
 
@@ -75,13 +86,13 @@ def ringBell_withThread():
         current_time = time.localtime()
         minute = current_time.tm_min
         # if minute % 30 == 0:
-        # if minute == 35 or minute == 40 or minute == 45 :
-        if minute == 38 : 
-            player.startPlay("./cuckoo4s.mp3")
-        elif minute == 42 :
-            player.startPlay("./cock-dawn.mp3")
+        # if minute == 36 or minute == 40 or minute == 45 :
+        if minute == 36 : 
+            player.startPlay("cuckoo4s.mp3")
+        elif minute == 40 :
+            player.startPlay("cock-dawn.mp3")
         elif minute == 45 :
-            player.startPlay("./steam-train-whistle30s.mp3")            
+            player.startPlay("steam-train-whistle30s.mp3")            
         else :
             player.stopPlay() ## stop
          
