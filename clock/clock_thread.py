@@ -86,10 +86,11 @@ def ringBell_withThread():
         current_time = time.localtime()
         minute = current_time.tm_min
         # if minute % 30 == 0:
-        # if minute == 36 or minute == 40 or minute == 45 :
-        if minute == 36 : 
-            player.startPlay("cuckoo4s.mp3")
-        elif minute == 40 :
+        # if minute == 38 or minute == 40 or minute == 45 :
+
+        # if minute == 38 : 
+        #     player.startPlay("cuckoo4s.mp3")
+        if minute == 38 :
             player.startPlay("cock-dawn.mp3")
         elif minute == 45 :
             player.startPlay("steam-train-whistle30s.mp3")            
