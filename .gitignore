@@ -12,6 +12,7 @@ tmp.*
 
 __pycache__/
 others/__pycache__/
+clock/__pycache__/
 clock/~/.pycache/*
 gradio/__pycache__/
 

@@ -81,10 +81,14 @@ def recognize_text(image_path, output_path=None):
     
     # 使用 PaddleOCR 识别文本
     result = ocr.ocr(image, cls=True)
+
     
     # 打印识别结果
     print("识别结果:")
     for line in result:
+        if not line :
+            print(f"line is none\n")
+            return        
         for box, text in line:
             # print(f"文本: {text[0]}, 置信度: {text[1]:.2f}")
             print(f"{text[0]}")
