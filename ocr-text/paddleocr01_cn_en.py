@@ -1,5 +1,8 @@
 """
 ### 使用说明
+(0) 
+  $ conda activate paddleocr
+
 
 (1). **安装依赖**：
    ```bash
@@ -38,7 +41,9 @@
    ocr = PaddleOCR(lang="multilingual")  # 需要额外下载多语言模型
    ```
 """
-
+import sys
+from pathlib import Path
+ 
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -65,13 +70,13 @@ ocr = PaddleOCR(
     show_log=False
 )
 
-def recognize_text(image_path, output_path=None):
+def recognize_text(image_path,  outputImg_path=None, outputTxt_path=None):
     """
     识别图像中的中英文文字
     
     参数:
         image_path: 输入图像的路径
-        output_path: 输出图像的路径（可选），如果提供则在原图上标注识别结果并保存
+        outputImg_path: 输出图像的路径（可选），如果提供则在原图上标注识别结果并保存
     """
     # 读取图像
     image = cv2.imread(image_path)
@@ -81,8 +86,9 @@ def recognize_text(image_path, output_path=None):
     
     # 使用 PaddleOCR 识别文本
     result = ocr.ocr(image, cls=True)
+    with open(outputTxt_path,"+at", encoding='utf-8') as fo:
+        fo.write(f"  \n\n")  
 
-    
     # 打印识别结果
     print("识别结果:")
     for line in result:
@@ -91,10 +97,13 @@ def recognize_text(image_path, output_path=None):
             return        
         for box, text in line:
             # print(f"文本: {text[0]}, 置信度: {text[1]:.2f}")
-            print(f"{text[0]}")
+            # print(f"{text[0]}")
+            if outputTxt_path:
+                with open(outputTxt_path,"+at", encoding='utf-8') as fo:
+                    fo.write(f"{text[0]}\n")                
     return # --------------------------------
     # 如果指定了输出路径，在原图上标注识别结果并保存
-    if output_path and font:
+    if outputImg_path and font:
         # 加载图像用于绘制
         image = Image.open(image_path).convert('RGB')
         draw = ImageDraw.Draw(image)
@@ -113,8 +122,8 @@ def recognize_text(image_path, output_path=None):
                 draw.text(position, text_content, font=font, fill=(0, 0, 0))
         
         # 保存标注后的图像
-        image.save(output_path)
-        print(f"标注后的图像已保存至: {output_path}")
+        image.save(outputImg_path)
+        print(f"标注后的图像已保存至: {outputImg_path}")
     
     # 显示识别结果
     if result:
@@ -139,10 +148,45 @@ def recognize_text(image_path, output_path=None):
     
     return result
 
-if __name__ == "__main__":
-    # 使用示例
-    image_path = "/home/abner/Pictures/1.png"  # 替换为你的图像路径
-    output_path = "/home/abner/Pictures/output.jpg"  # 替换为输出图像的路径
+
+
+def main():
+    # python ocr-text/paddleocr01_cn_en.py --in-image /home/abner/Pictures/1.png --out-txt ./out.txt
+    import argparse
+    import os
+    parser = argparse.ArgumentParser(description='把in-image里的文字识别出来，存到out-txt')
+    parser.add_argument('--in-image', required=True, help='in-image文件路径')  
+    parser.add_argument('--out-txt', help='输出的txt文件夹路径')
     
-    results = recognize_text(image_path, output_path)    
+    args = parser.parse_args()
+    
+    inImg = Path(args.in_image) 
+    outTxt = Path(args.out_txt) 
+
+    if not inImg.is_file() :
+        print(f"{inImg} is not a valid file\n")
+        sys.exit(1101) 
+
+    if not outTxt.parent.is_dir() :
+        print(f"{inImg} is not a valid dir\n")
+        sys.exit(1101)  
+
+    ourDir = os.path.dirname(args.out_txt)
+    outImg = ourDir +  f"/{inImg.stem}_out{inImg.suffix}"
+
+    results = recognize_text(args.in_image,  outImg , args.out_txt)    
+         
+
+
+if __name__ == "__main__":
+    is_use_argparse = True
+
+    if is_use_argparse :
+        main()
+    else:
+        image_path = "/home/abner/Pictures/1.png"  # 替换为你的图像路径
+        output_path = "/home/abner/Pictures/output.jpg"  # 替换为输出图像的路径
+        outputTxt_path="./out.txt"
+        
+        results = recognize_text(image_path, outputTxt_path, output_path)    
 

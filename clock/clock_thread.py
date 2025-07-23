@@ -91,7 +91,8 @@ def ringBell_withThread():
         # if minute == 38 : 
         #     player.startPlay("cuckoo4s.mp3")
         if minute == 38 :
-            player.startPlay("cock-dawn.mp3")
+            # player.startPlay("cock-dawn.mp3")
+            pass
         elif minute == 45 :
             player.startPlay("steam-train-whistle30s.mp3")            
         else :
