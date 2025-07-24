@@ -188,5 +188,5 @@ if __name__ == "__main__":
         output_path = "/home/abner/Pictures/output.jpg"  # 替换为输出图像的路径
         outputTxt_path="./out.txt"
         
-        results = recognize_text(image_path, outputTxt_path, output_path)    
+        results = recognize_text(image_path, output_path, outputTxt_path)    
 
