@@ -1,9 +1,7 @@
 """
 ### 使用说明
-(0) 
+(0)  conda activate paddleocr
   $ conda activate paddleocr
-
-
 (1). **安装依赖**：
    ```bash
    pip install paddlepaddle paddleocr opencv-python matplotlib pillow
@@ -88,19 +86,20 @@ def recognize_text(image_path,  outputImg_path=None, outputTxt_path=None):
     result = ocr.ocr(image, cls=True)
     with open(outputTxt_path,"+at", encoding='utf-8') as fo:
         fo.write(f"  \n\n")  
-
+         
     # 打印识别结果
-    print("识别结果:")
+    print("识别结果:-----------------start\n")
     for line in result:
         if not line :
             print(f"line is none\n")
             return        
         for box, text in line:
             # print(f"文本: {text[0]}, 置信度: {text[1]:.2f}")
-            # print(f"{text[0]}")
+            print(f"{text[0]}")
             if outputTxt_path:
                 with open(outputTxt_path,"+at", encoding='utf-8') as fo:
-                    fo.write(f"{text[0]}\n")                
+                    fo.write(f"{text[0]}\n")    
+    print("识别结果:-----------------end\n")            
     return # --------------------------------
     # 如果指定了输出路径，在原图上标注识别结果并保存
     if outputImg_path and font:
@@ -182,11 +181,13 @@ if __name__ == "__main__":
     is_use_argparse = True
 
     if is_use_argparse :
+        print("................in ocr-text/paddleocr01_cn_en.py: is_use_argparse =True.\n")
         main()
     else:
+        print("................in ocr-text/paddleocr01_cn_en.py: is_use_argparse =False.\n")
         image_path = "/home/abner/Pictures/1.png"  # 替换为你的图像路径
         output_path = "/home/abner/Pictures/output.jpg"  # 替换为输出图像的路径
         outputTxt_path="./out.txt"
         
-        results = recognize_text(image_path, output_path, outputTxt_path)    
+        results = recognize_text(image_path,  output_path, outputTxt_path)    
 
