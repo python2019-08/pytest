@@ -7,13 +7,13 @@
 from PIL import Image
 
 
-def resize_pic(img_inPath,   img_outPath):
+def resize_pic(img_inPath,   img_outPath, target_size=(1024, 1024)):
     # 1. 打开图片（替换为你的背景图路径）
      
     img = Image.open(img_inPath)
 
     # 2. 定义目标尺寸（示例：缩放到1280*720，或按比例缩放）
-    target_size = (1024, 1024)  # (宽度, 高度)
+    # target_size = (1024, 1024)  # (宽度, 高度)
     # 若需等比例缩放（避免变形），可先计算比例（示例：宽度缩为1000，高度按比例）
     # w, h = img.size
     # new_w = 1000
@@ -110,11 +110,11 @@ def resizePng():
 
 # 调用示例（适配PNG）
 if __name__ == "__main__":
-    rootPath="/home/abner/Downloads/"
+    rootPath="/home/abner/Downloads/streetmap/example/"
     # for i in range(1,5):
     #     inPath = rootPath + "login_right0" + str(i) + ".png"
     #     outPath = rootPath + "login_right0" + str(i) + "_820x1080.png"
     #     resize_pic(inPath, outPath )    
-    inPath  = rootPath + "cn-fashion-meadow01.jpg"
-    outPath = rootPath + "cn-fashion-meadow01_1024x1024.png"
-    resize_pic(inPath, outPath ) 
+    inPath  = rootPath + "5down00.jpg"
+    outPath = rootPath + "5down.jpg"
+    resize_pic(inPath, outPath, (4000,4000)) 
